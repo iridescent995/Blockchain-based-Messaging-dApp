@@ -118,6 +118,27 @@ App = {
   },
 
   
+
+
+  //on submiting the msg
+   sendmsg: function() {
+    var message = $('#message').val();
+    var status = $('#message').val();
+    App.contracts.Message.deployed().then(function(instance) {
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date+' '+time;
+      return instance.sendMessage(App.account, dateTime, message,  );
+    }).then(function(result) {
+      // Wait for votes to update
+      $("#content").hide();
+      $("#loader").show();
+    }).catch(function(err) {
+      console.error(err);
+    });
+  }
+
 };
 
 $(function() {

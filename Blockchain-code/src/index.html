@@ -60,9 +60,22 @@
         </div> 
       </div>
     <form onSubmit="App.sendmsg(); return false;">
-              <div class="form-group col-sm-10">
-                <textarea class="form-control" rows="3" placeholder="Start Typing....."></textarea>
+              <div class="form-group col-sm-8">
+                <textarea class="form-control" rows="3" placeholder="Start Typing....." id="message" required></textarea>
                 </select>
+              </div>
+              
+              <div class="col-sm-2" >
+                <span>Status: &nbsp;</span>
+                <div class="radio">
+                  <label><input type="radio" name="optradio" id="status" checked>OK</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="optradio" id="status">Important</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="optradio" id="status">Urgent</label>
+                </div>
               </div>
               <div class="col-sm-2">
                 <button type="button" class="btn btn-success">Send</button>
