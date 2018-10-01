@@ -23,13 +23,13 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON("Message.json", function(election) {
+    $.getJSON("Message.json", function(message) {
       // Instantiate a new truffle contract from the artifact
       App.contracts.Message = TruffleContract(message);
       // Connect provider to interact with contract
       App.contracts.Message.setProvider(App.web3Provider);
 
-      App.listenForEvents();
+      //App.listenForEvents();
 
       return App.render();
     });
@@ -56,6 +56,7 @@ App = {
     var messageInstance;
     var loader = $("#loader");
     var content = $("#content");
+    var myaccount;
 
     //hide content if account not detected
     loader.show();
@@ -65,44 +66,52 @@ App = {
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
         App.account = account;
+        myaccount = account;
         $("#accountAddress").html("Your Account: " + account);
       }
     });
 
+    loader.hide();
+    content.show();
+
     // Load contract data
-    App.contracts.Election.deployed().then(function(instance) {
-      electionInstance = instance;
-      return electionInstance.candidatesCount();
-    }).then(function(candidatesCount) {
-      var candidatesResults = $("#candidatesResults");
-      candidatesResults.empty();
+    App.contracts.Message.deployed().then(function(instance) {
+      messageInstance = instance;
+      return messageInstance.messageCount();
+    }).then(function(messageCount) {
+      var messageResults = $("#msghistory");
+      messageResults.empty();
 
-      var candidatesSelect = $('#candidatesSelect');
-      candidatesSelect.empty();
+      // var candidatesSelect = $('#candidatesSelect');
+      // candidatesSelect.empty();
 
-      for (var i = 1; i <= candidatesCount; i++) {
-        electionInstance.candidates(i).then(function(candidate) {
-          var id = candidate[0];
-          var name = candidate[1];
-          var voteCount = candidate[2];
+      for (var i = 1; i <= messageCount; i++) {
+        messageInstance.messagebody(i).then(function(msg) {
+          var addr = msg[0];
+          var time = msg[1];
+          var message = msg[2];
+          var status = msg[3];
+          var textRight= "panel panel-default  text-right";
+
+          if (myaccount == addr){
+             textRight = "panel panel-default"
+          }
 
           // Render candidate Result
-          var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>"
-          candidatesResults.append(candidateTemplate);
-
-          // Render candidate ballot option
-          var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
-          candidatesSelect.append(candidateOption);
+          var msgTemplate = "<div class=\"" + textRight + "\" id=\"div2\" style=\"margin-bottom: 2px;\"> <div class=\"panel-body\" style=\"padding: 5px; font-size: 1.2em;\" id=\"message\">" + 
+              "<p id=\"userid\" style=\"font-size: 0.7em;\"><b> "+ addr + " : </b>" +
+               
+            "<span class=\"label label-success\" id=\"status\">"+
+              "<span class=\"glyphicon glyphicon-ok\"></span> " + status + "</span> &nbsp; &nbsp;" + 
+            "<span class=\"label label-primary\" id=\"time\">"+ 
+              "<span class=\"glyphicon glyphicon-time\"></span> &nbsp;"+ time +"</span> &nbsp;</p>"
+          + message + "&nbsp;  &nbsp;"+ "</div>"+
+        "</div></div>"
+          
+          //end of template
+          messageResults.append(msgTemplate);
         });
       }
-      return electionInstance.voters(App.account);
-    }).then(function(hasVoted) {
-      // Do not allow a user to vote
-      if(hasVoted) {
-        $('form').hide();
-      }
-      loader.hide();
-      content.show();
     }).catch(function(error) {
       console.warn(error);
     });

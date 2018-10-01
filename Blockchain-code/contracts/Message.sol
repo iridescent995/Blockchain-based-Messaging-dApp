@@ -10,15 +10,15 @@ contract Message {
 		
 	}
 	//store the messages
-	mapping (uint => MessageBody) messagebody;
+	mapping (uint => MessageBody) public messagebody;
 
 	//to index the mapping
-	uint messageCount;
+	uint public messageCount ;
 
 
 	//function to receive a messagebody
 	
-	function sendMessage (address _addr, string _time, string _message, string _messagestatus) {
+	function sendMessage (address _addr, string _time, string _message, string _messagestatus) public{
 		messageCount++;
 		messagebody[messageCount]=MessageBody(_addr,_time,_message, _messagestatus);
 	}
