@@ -1,7 +1,9 @@
-# Blockchain-based-Messaging-dApp
-Ethereum based Blockchain messaging Dapp
+# Ethereum Blockchain based Messaging dApp
 
-### Useful Commands
+
+![capture](https://user-images.githubusercontent.com/11767495/46964583-163d0580-d0c6-11e8-819a-145242413807.JPG)
+
+### Useful Commands during development
 
 Reset cc
 ```
