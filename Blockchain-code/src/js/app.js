@@ -2,8 +2,6 @@ App = {
   web3Provider: null,
   contracts: {},
   account: '0x0',
-  hasVoted: false,
-
   init: function() {
     return App.initWeb3();
   },
@@ -91,7 +89,7 @@ App = {
           var time = msg[1];
           var message = msg[2];
           var status = msg[3];
-          var textRight= "panel panel-default  text-right";
+          var textRight= "panel panel-default text-right";
 
           if (myaccount == addr){
              textRight = "panel panel-default"
@@ -122,22 +120,19 @@ App = {
 
   //on submiting the msg
    sendmsg: function() {
-    var message = $('#message').val();
-    var status = $('#message').val();
+    var message1 = $('#message1').val();
+    var radioValue = $("input[name='optradio']:checked").val();
     App.contracts.Message.deployed().then(function(instance) {
       var today = new Date();
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       var dateTime = date+' '+time;
-      return instance.sendMessage(App.account, dateTime, message,  );
-    }).then(function(result) {
-      // Wait for votes to update
-      $("#content").hide();
-      $("#loader").show();
+      console.log(App.account, dateTime," = ", message1, " = ", radioValue);
+      return instance.sendMessage(App.account, dateTime, message1, radioValue );
     }).catch(function(err) {
       console.error(err);
     });
-  }
+  },
 
 };
 

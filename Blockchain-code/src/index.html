@@ -59,26 +59,26 @@
         <div  id="msghistory" style="height: 300px; overflow-y: auto;">
         </div> 
       </div>
-    <form onSubmit="App.sendmsg(); return false;">
+    <form onSubmit="App.sendmsg();">
               <div class="form-group col-sm-8">
-                <textarea class="form-control" rows="3" placeholder="Start Typing....." id="message" required></textarea>
+                <textarea class="form-control" rows="3" placeholder="Start Typing....." id="message1" required></textarea>
                 </select>
               </div>
               
               <div class="col-sm-2" >
                 <span>Status: &nbsp;</span>
                 <div class="radio">
-                  <label><input type="radio" name="optradio" id="status" checked>OK</label>
+                  <label><input type="radio" name="optradio" value="OK" checked>OK</label>
                 </div>
                 <div class="radio">
-                  <label><input type="radio" name="optradio" id="status">Important</label>
+                  <label><input type="radio" name="optradio" value="Important">Important</label>
                 </div>
                 <div class="radio">
-                  <label><input type="radio" name="optradio" id="status">Urgent</label>
+                  <label><input type="radio" name="optradio" value="Urgent">Urgent</label>
                 </div>
               </div>
               <div class="col-sm-2">
-                <button type="button" class="btn btn-success">Send</button>
+                <button type="submit" class="btn btn-success">Send</button>
               </div>
               <hr />
     </form>
