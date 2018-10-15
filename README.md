@@ -1,9 +1,9 @@
 # Blockchain-based-Messaging-dApp
 Ethereum based Blockchain messaging Dapp
 
-### Commands
+### Useful Commands
 
-reset cc
+Reset cc
 ```
 truffle migrate --reset
 ```
